@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>보충제 최저가 - APARTE</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Archivo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+.supp-page{padding:120px 0 80px}.supp-search{max-width:800px;margin:0 auto 60px;text-align:center}.search-bar{width:100%;padding:18px 24px;border:2px solid var(--black);border-radius:50px;font-size:18px;margin-bottom:30px}.filter-tabs{display:flex;gap:15px;justify-content:center;flex-wrap:wrap}.tab-btn{padding:10px 24px;border:1px solid var(--black);background:var(--white);font-weight:600;transition:all .3s}.tab-btn.active,.tab-btn:hover{background:var(--black);color:var(--white)}.sort-bar{display:flex;gap:15px;justify-content:center;flex-wrap:wrap;margin:30px 0}.sort-btn{padding:8px 18px;background:var(--gray-light);font-size:14px;transition:all .3s}.sort-btn.active,.sort-btn:hover{background:var(--pink);color:var(--white)}.supp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:30px}.supp-card{background:var(--white);border:1px solid #e0e0e0;padding:20px;border-radius:8px;transition:all .3s}.supp-card:hover{transform:translateY(-5px);box-shadow:0 8px 25px rgba(0,0,0,.1)}.supp-img{width:100%;aspect-ratio:1;background:var(--gray-light);border-radius:8px;margin-bottom:15px}.supp-name{font-size:18px;font-weight:600;margin-bottom:10px}.supp-prices{margin:15px 0}.price-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #f0f0f0}.price-platform{font-size:14px;font-weight:600;opacity:.7}.price-value{font-size:18px;font-weight:700;color:var(--pink)}.price-lowest{background:var(--pink-light);padding:3px 8px;border-radius:4px;font-size:11px;color:var(--pink);margin-left:8px}.btn-buy{width:100%;padding:12px;background:var(--black);color:var(--white);font-weight:600;margin-top:15px;transition:all .3s}.btn-buy:hover{background:var(--pink)}.btn-alert-price{width:100%;padding:10px;background:var(--gray-light);font-size:14px;margin-top:10px;transition:all .3s}.btn-alert-price:hover{background:var(--pink-light);color:var(--pink)}
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-inner">
+    <div class="nav-actions left">
+      <button class="btn-nav" onclick="openModal('login')">Login</button>
+      <button class="btn-nav" onclick="openModal('signup')">Sign Up</button>
+    </div>
+    <a href="index.html" class="nav-logo">APARTE</a>
+    <div class="nav-actions right">
+      <a href="cart.html" class="btn-nav btn-cart">Cart <span id="cartBadge">0</span></a>
+    </div>
+  </div>
+</nav>
+
+<section class="supp-page">
+  <div class="container">
+    <h1 class="section-title">보충제 최저가 비교</h1>
+    <p style="text-align:center;margin-bottom:40px;opacity:.7">쿠팡 · 네이버 · 아마존 최저가를 한눈에</p>
+    
+    <div class="supp-search">
+      <input type="text" class="search-bar" placeholder="제품명으로 검색하세요..." id="searchInput">
+      
+      <div class="filter-tabs">
+        <button class="tab-btn active" onclick="filterCategory('all')">전체</button>
+        <button class="tab-btn" onclick="filterCategory('protein')">프로틴</button>
+        <button class="tab-btn" onclick="filterCategory('bcaa')">BCAA</button>
+        <button class="tab-btn" onclick="filterCategory('creatine')">크레아틴</button>
+        <button class="tab-btn" onclick="filterCategory('arginine')">아르기닌</button>
+      </div>
+      
+      <div class="sort-bar">
+        <button class="sort-btn active" onclick="sortBy('popular')">인기순</button>
+        <button class="sort-btn" onclick="sortBy('name')">이름순</button>
+        <button class="sort-btn" onclick="sortBy('price-low')">낮은가격</button>
+        <button class="sort-btn" onclick="sortBy('price-high')">높은가격</button>
+        <button class="sort-btn" onclick="sortBy('reviews')">리뷰많은순</button>
+      </div>
+    </div>
+
+    <div class="supp-grid" id="suppGrid"></div>
+
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-wrap">
+      <div class="footer-brand"><h3>APARTE</h3><p>Focus Separately</p></div>
+      <div class="footer-links"><a href="index.html">Home</a><a href="collection.html">Collection</a></div>
+    </div>
+    <p class="footer-copy">© 2025 APARTE. All rights reserved.</p>
+  </div>
+</footer>
+
+<div class="modal" id="modalLogin"><div class="modal-inner"><button class="modal-close" onclick="closeModal('login')">✕</button><h3>Login</h3><p class="modal-coming">🚀 곧 서비스 예정입니다!</p></div></div>
+<div class="modal" id="modalSignup"><div class="modal-inner"><button class="modal-close" onclick="closeModal('signup')">✕</button><h3>Sign Up</h3><p class="modal-coming">🚀 곧 서비스 예정입니다!</p></div></div>
+<div class="modal" id="modalAlert"><div class="modal-inner"><button class="modal-close" onclick="closeModal('alert')">✕</button><h3>🔔 가격 알림</h3><p class="modal-coming">준비 중입니다!</p><p class="modal-sub">이메일을 남겨주시면 오픈 시 알려드리겠습니다.</p><input type="email" placeholder="이메일 입력" class="modal-input"><button class="btn-modal-submit">알림 받기</button></div></div>
+
+<script src="script.js"></script>
+<script>
+const sampleProducts=[
+  {id:1,name:'옵티멈 뉴트리션 골드 스탠다드 웨이',category:'protein',coupang:52900,naver:54000,amazon:45990,reviews:1240},
+  {id:2,name:'마이프로틴 임팩트 웨이 프로틴',category:'protein',coupang:48900,naver:49500,amazon:43990,reviews:980},
+  {id:3,name:'익스텐드 BCAA',category:'bcaa',coupang:38900,naver:39900,amazon:35990,reviews:720},
+  {id:4,name:'싸이벡스 BCAA',category:'bcaa',coupang:32900,naver:33500,amazon:31990,reviews:540},
+  {id:5,name:'크레아틴 모노하이드레이트',category:'creatine',coupang:28900,naver:29900,amazon:26990,reviews:890},
+  {id:6,name:'나우 푸드 크레아틴',category:'creatine',coupang:24900,naver:25500,amazon:23990,reviews:670},
+  {id:7,name:'L-아르기닌 5000mg',category:'arginine',coupang:26900,naver:27500,amazon:25990,reviews:450},
+  {id:8,name:'나우 푸드 아르기닌',category:'arginine',coupang:22900,naver:23500,amazon:21990,reviews:380}
+];
+
+let currentFilter='all';
+let currentSort='popular';
+
+function renderProducts(){
+  let filtered=currentFilter==='all'?sampleProducts:sampleProducts.filter(p=>p.category===currentFilter);
+  
+  if(currentSort==='name')filtered.sort((a,b)=>a.name.localeCompare(b.name));
+  else if(currentSort==='price-low')filtered.sort((a,b)=>Math.min(a.coupang,a.naver,a.amazon)-Math.min(b.coupang,b.naver,b.amazon));
+  else if(currentSort==='price-high')filtered.sort((a,b)=>Math.max(b.coupang,b.naver,b.amazon)-Math.max(a.coupang,a.naver,a.amazon));
+  else if(currentSort==='reviews')filtered.sort((a,b)=>b.reviews-a.reviews);
+  
+  const grid=document.getElementById('suppGrid');
+  let html='';
+  filtered.forEach(p=>{
+    const lowest=Math.min(p.coupang,p.naver,p.amazon);
+    html+=`<div class="supp-card">
+      <div class="supp-img"></div>
+      <h3 class="supp-name">${p.name}</h3>
+      <div class="supp-prices">
+        <div class="price-row">
+          <span class="price-platform">쿠팡</span>
+          <span class="price-value">₩${p.coupang.toLocaleString()}${p.coupang===lowest?'<span class="price-lowest">최저가</span>':''}</span>
+        </div>
+        <div class="price-row">
+          <span class="price-platform">네이버</span>
+          <span class="price-value">₩${p.naver.toLocaleString()}${p.naver===lowest?'<span class="price-lowest">최저가</span>':''}</span>
+        </div>
+        <div class="price-row">
+          <span class="price-platform">아마존</span>
+          <span class="price-value">₩${p.amazon.toLocaleString()}${p.amazon===lowest?'<span class="price-lowest">최저가</span>':''}</span>
+        </div>
+      </div>
+      <button class="btn-buy" onclick="alert('실제 쇼핑몰로 이동합니다')">최저가로 구매</button>
+      <button class="btn-alert-price" onclick="openModal('alert')">🔔 가격 알림 받기</button>
+    </div>`;
+  });
+  grid.innerHTML=html;
+}
+
+function filterCategory(cat){
+  currentFilter=cat;
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  event.target.classList.add('active');
+  renderProducts();
+}
+
+function sortBy(sort){
+  currentSort=sort;
+  document.querySelectorAll('.sort-btn').forEach(b=>b.classList.remove('active'));
+  event.target.classList.add('active');
+  renderProducts();
+}
+
+renderProducts();
+</script>
+</body>
+</html>

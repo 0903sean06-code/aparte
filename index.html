@@ -1,246 +1,185 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>APARTE - Focus Separately</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Archivo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>APARTE – Focus Separately</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Archivo:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="nav">
-        <div class="nav-container">
-            <a href="#" class="logo">APARTE</a>
-            <div class="nav-links">
-                <a href="#products">Products</a>
-                <a href="#about">About</a>
-                <a href="#promo">Promos</a>
-                <a href="#" class="cart-icon">
-                    <span class="cart-count">0</span>
-                    🛒
-                </a>
-            </div>
+
+<nav class="navbar" id="navbar">
+  <div class="nav-inner">
+    <div class="nav-actions left">
+      <button class="btn-nav" onclick="openModal('login')">Login</button>
+      <button class="btn-nav" onclick="openModal('signup')">Sign Up</button>
+    </div>
+    <a href="index.html" class="nav-logo">APARTE</a>
+    <div class="nav-actions right">
+      <a href="cart.html" class="btn-nav btn-cart">Cart <span id="cartBadge">0</span></a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <p class="hero-tag">Focus Separately</p>
+    <h1 class="hero-title">BE REAL<br><span>YOU</span></h1>
+    <p class="hero-sub">운동과 뷰티를 따로, 그래서 더 강하게</p>
+    <a href="#products" class="btn-hero">Explore</a>
+  </div>
+</section>
+
+<section class="today-offer">
+  <div class="container">
+    <div class="offer-badge">🔥 TODAY'S OFFER</div>
+    <div class="offer-card">
+      <div class="offer-img-box">
+        <div class="offer-placeholder" id="offerPlaceholder" style="background:linear-gradient(135deg,#1a1a1a,#2a2a2a);"></div>
+      </div>
+      <div class="offer-details">
+        <h3 id="offerName">레깅스</h3>
+        <p class="offer-orig" id="offerOrig">₩38,000</p>
+        <p class="offer-price" id="offerPrice">₩35,000</p>
+        <div class="offer-timer">
+          <span>⏰ 남은 시간</span>
+          <div class="timer-box">
+            <span id="tH">23</span><span class="tsep">:</span><span id="tM">59</span><span class="tsep">:</span><span id="tS">59</span>
+          </div>
         </div>
-    </nav>
+        <button class="btn-offer" onclick="addToCart('offer-item')">지금 구매하기</button>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-content">
-            <div class="hero-text">
-                <h1 class="hero-title">
-                    <span class="title-line">FOCUS</span>
-                    <span class="title-line highlight">SEPARATELY</span>
-                </h1>
-                <p class="hero-subtitle">Be Real You</p>
-                <p class="hero-description">헬스와 뷰티의 경계선에서<br>완벽을 위한 새로운 기준을 만듭니다</p>
-                <a href="#products" class="cta-button">Explore Products</a>
-            </div>
-            <div class="hero-visual">
-                <div class="diagonal-stripe"></div>
-            </div>
+<section class="products" id="products">
+  <div class="container">
+    <h2 class="section-title">PRODUCTS</h2>
+    <div class="product-grid">
+      <div class="product-card" onclick="location='detail-liftbalm.html'">
+        <div class="product-img-wrap">
+          <div class="product-ph" style="background:linear-gradient(135deg,#fff0f6,#ffe0ec);"></div>
+          <span class="product-tag">Signature</span>
         </div>
-    </section>
-
-    <!-- Featured Products -->
-    <section class="products" id="products">
-        <div class="container">
-            <h2 class="section-title">OUR PRODUCTS</h2>
-            
-            <!-- Product Grid -->
-            <div class="product-grid">
-                <!-- LIFTBALM -->
-                <div class="product-card featured" data-product="liftbalm">
-                    <div class="product-badge">BEST SELLER</div>
-                    <div class="product-image">
-                        <img src="liftbalm.png" alt="LIFTBALM Pink Dumbbell Lip Balm" id="liftbalm-img">
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-name">LIFTBALM</h3>
-                        <p class="product-desc">올리고 싶은 무게만큼<br>립밤을 입술에 올려라</p>
-                        <div class="product-price">
-                            <span class="price-original">₩13,000</span>
-                            <span class="price-sale">₩9,900</span>
-                        </div>
-                        <button class="btn-add-cart">Add to Cart</button>
-                    </div>
-                </div>
-
-                <!-- BARDYMIST -->
-                <div class="product-card" data-product="bardymist">
-                    <div class="product-badge new">NEW</div>
-                    <div class="product-image">
-                        <img src="bardymist.png" alt="BARDYMIST Barbell Bar Mist" id="bardymist-img">
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-name">BARDYMIST</h3>
-                        <p class="product-desc">BAR + BODY<br>운동과 하나되는 미스트</p>
-                        <div class="product-price">
-                            <span class="price-original">₩28,000</span>
-                            <span class="price-sale">₩24,900</span>
-                        </div>
-                        <button class="btn-add-cart">Add to Cart</button>
-                    </div>
-                </div>
-
-                <!-- FRABELL -->
-                <div class="product-card" data-product="frabell">
-                    <div class="product-badge bundle">BUNDLE</div>
-                    <div class="product-image">
-                        <div class="placeholder-img">
-                            <span>🏋️</span>
-                        </div>
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-name">FRABELL</h3>
-                        <p class="product-desc">FRAGRANCE + BELL<br>케틀벨 향수</p>
-                        <div class="product-price">
-                            <span class="price-sale">₩33,500</span>
-                            <div class="bundle-price">4종 세트 ₩66,000</div>
-                        </div>
-                        <button class="btn-add-cart">Add to Cart</button>
-                    </div>
-                </div>
-
-                <!-- ATHLETIC WEAR -->
-                <div class="product-card wide" data-product="wear">
-                    <div class="product-badge">ATHLETIC WEAR</div>
-                    <div class="product-image wear-grid">
-                        <div class="placeholder-img small"><span>👕</span></div>
-                        <div class="placeholder-img small"><span>👖</span></div>
-                        <div class="placeholder-img small"><span>🧥</span></div>
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-name">ATHLETIC COLLECTION</h3>
-                        <p class="product-desc">레깅스, 티셔츠, 후디, 브라, 탑, 팬티, 바지<br>드라이핏 소재 / 브랜드 시그니처 디자인</p>
-                        <div class="product-price">
-                            <span class="price-sale">₩27,000 ~</span>
-                        </div>
-                        <button class="btn-add-cart">View Collection</button>
-                    </div>
-                </div>
-            </div>
+        <div class="product-info">
+          <h3>LIFTBALM</h3>
+          <p class="product-desc">덤벨 립밤</p>
+          <p class="product-orig">₩13,000</p>
+          <p class="product-price">₩9,900</p>
+          <button class="btn-cart-add" onclick="event.stopPropagation();addToCart('liftbalm')">+ Cart</button>
         </div>
-    </section>
-
-    <!-- Promotions Section -->
-    <section class="promo-section" id="promo">
-        <div class="container">
-            <h2 class="section-title">SPECIAL OFFERS</h2>
-            
-            <div class="promo-grid">
-                <div class="promo-card highlight">
-                    <div class="promo-icon">🎁</div>
-                    <h3>첫 구매 1+1</h3>
-                    <p>모든 제품 첫 구매 시<br>무조건 1+1 제공</p>
-                </div>
-
-                <div class="promo-card">
-                    <div class="promo-icon">🏋️</div>
-                    <h3>헬스장 회원 할인</h3>
-                    <p>헬스장 등록증 인증 시<br>₩5,000 즉시 할인</p>
-                </div>
-
-                <div class="promo-card">
-                    <div class="promo-icon">📸</div>
-                    <h3>포토리뷰 이벤트</h3>
-                    <p>가족/친구/연인과 함께<br>매월 100명 추첨 ₩100,000</p>
-                </div>
-
-                <div class="promo-card">
-                    <div class="promo-icon">⚡</div>
-                    <h3>데일리 세일</h3>
-                    <p>매일 랜덤 상품 특가<br>찜 알림 설정 가능</p>
-                </div>
-
-                <div class="promo-card">
-                    <div class="promo-icon">💎</div>
-                    <h3>5% 포인트 적립</h3>
-                    <p>모든 제품 구매 시<br>자동 포인트 적립</p>
-                </div>
-
-                <div class="promo-card">
-                    <div class="promo-icon">➕</div>
-                    <h3>추가 구매 할인</h3>
-                    <p>같은 상품 추가 구매 시<br>건당 할인 혜택</p>
-                </div>
-            </div>
+      </div>
+      <div class="product-card" onclick="location='detail-bardymist.html'">
+        <div class="product-img-wrap">
+          <div class="product-ph" style="background:linear-gradient(135deg,#f0f4ff,#dde8ff);"></div>
         </div>
-    </section>
-
-    <!-- About Section -->
-    <section class="about-section" id="about">
-        <div class="container">
-            <div class="about-content">
-                <div class="about-text">
-                    <h2 class="section-title">ABOUT APARTE</h2>
-                    <div class="brand-story">
-                        <p class="story-text">APARTE는 헬스와 뷰티의 경계에서 시작되었습니다.</p>
-                        <p class="story-text">우리는 믿습니다:</p>
-                        <p class="story-text highlight">운동할 때는 더 멋진 내가 되고<br>꾸밀 때는 더 예쁜 내가 되기를.</p>
-                        <p class="story-text bold">완벽을 위한 경계선입니다.</p>
-                        <p class="story-cta">APARTE와 함께 시작하세요.</p>
-                    </div>
-                </div>
-                <div class="about-visual">
-                    <div class="philosophy-box">
-                        <div class="phil-item">
-                            <span class="phil-number">01</span>
-                            <span class="phil-text">Focus Separately</span>
-                        </div>
-                        <div class="phil-item">
-                            <span class="phil-number">02</span>
-                            <span class="phil-text">Be Real You</span>
-                        </div>
-                        <div class="phil-item">
-                            <span class="phil-number">03</span>
-                            <span class="phil-text">완벽을 위한 경계</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="product-info">
+          <h3>BARDYMIST</h3>
+          <p class="product-desc">바벨바 미스트</p>
+          <p class="product-orig">₩28,000</p>
+          <p class="product-price">₩24,900</p>
+          <button class="btn-cart-add" onclick="event.stopPropagation();addToCart('bardymist')">+ Cart</button>
         </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-brand">
-                    <h3 class="footer-logo">APARTE</h3>
-                    <p>Focus Separately, Be Real You</p>
-                </div>
-                <div class="footer-links">
-                    <div class="footer-column">
-                        <h4>Products</h4>
-                        <a href="#">LIFTBALM</a>
-                        <a href="#">BARDYMIST</a>
-                        <a href="#">FRABELL</a>
-                        <a href="#">Athletic Wear</a>
-                    </div>
-                    <div class="footer-column">
-                        <h4>Support</h4>
-                        <a href="#">FAQ</a>
-                        <a href="#">Shipping</a>
-                        <a href="#">Returns</a>
-                        <a href="#">Contact</a>
-                    </div>
-                    <div class="footer-column">
-                        <h4>Follow</h4>
-                        <a href="#">Instagram</a>
-                        <a href="#">Facebook</a>
-                        <a href="#">YouTube</a>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2026 APARTE. All rights reserved. | Portfolio Project</p>
-            </div>
+      </div>
+      <div class="product-card" onclick="location='detail-frabell.html'">
+        <div class="product-img-wrap">
+          <div class="product-ph" style="background:linear-gradient(135deg,#fff8f0,#ffe8d0);"></div>
         </div>
-    </footer>
+        <div class="product-info">
+          <h3>FRABELL</h3>
+          <p class="product-desc">케틀벨 향수</p>
+          <p class="product-price">₩33,500</p>
+          <button class="btn-cart-add" onclick="event.stopPropagation();addToCart('frabell')">+ Cart</button>
+        </div>
+      </div>
+      <div class="product-card" onclick="location='collection.html'">
+        <div class="product-img-wrap">
+          <div class="product-ph" style="background:linear-gradient(135deg,#1a1a1a,#2a2a2a);"></div>
+          <span class="product-tag" style="background:#ff006e;">Collection</span>
+        </div>
+        <div class="product-info">
+          <h3>HEALTHWEAR</h3>
+          <p class="product-desc">드라이핏 운동복</p>
+          <p class="product-price">From ₩27,000</p>
+          <button class="btn-cart-add" onclick="event.stopPropagation();location='collection.html'">View Collection</button>
+        </div>
+      </div>
+      <div class="product-card" onclick="location='detail-creatine.html'">
+        <div class="product-img-wrap">
+          <div class="product-ph" style="background:linear-gradient(135deg,#1a1a2e,#c1121f);"></div>
+          <span class="product-tag" style="background:#c1121f;">독점</span>
+        </div>
+        <div class="product-info">
+          <h3>CREATINE THE RED</h3>
+          <p class="product-desc">홍삼 크레아틴</p>
+          <p class="product-price">₩39,900</p>
+          <button class="btn-cart-add" onclick="event.stopPropagation();addToCart('creatine')">+ Cart</button>
+        </div>
+      </div>
+      <div class="product-card" onclick="location='supplement.html'">
+        <div class="product-img-wrap">
+          <div class="product-ph" style="background:linear-gradient(135deg,#0a0a0a,#333);"></div>
+          <span class="product-tag" style="background:#ff006e;">NEW</span>
+        </div>
+        <div class="product-info">
+          <h3>보충제 최저가</h3>
+          <p class="product-desc">쿠팡 · 네이버 · 아마존</p>
+          <button class="btn-scroll-it" onclick="event.stopPropagation();location='supplement.html'">Scroll it! →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <script src="script.js"></script>
+<section class="promotions">
+  <div class="container">
+    <h2 class="section-title">BENEFITS</h2>
+    <div class="promo-grid">
+      <div class="promo-card"><span class="promo-icon">🎁</span><h4>첫 구매 1+1</h4><p>무조건 첫 구매 시 1+1</p></div>
+      <div class="promo-card"><span class="promo-icon">💪</span><h4>헬스장 등록증 인증</h4><p>인증 시 ₩5,000 할인</p></div>
+      <div class="promo-card"><span class="promo-icon">⭐</span><h4>5% 포인트 적립</h4><p>모든 제품 구매 시</p></div>
+      <div class="promo-card"><span class="promo-icon">📸</span><h4>포토리뷰 이벤트</h4><p>매월 3일 추첨 ₩100,000 쿠폰</p></div>
+      <div class="promo-card"><span class="promo-icon">🔔</span><h4>데일리 세일</h4><p>매일 랜덤 상품 세일</p></div>
+      <div class="promo-card"><span class="promo-icon">📦</span><h4>추가 구매 할인</h4><p>건당 추가 할인 혜택</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="about">
+  <div class="container">
+    <div class="about-wrap">
+      <p class="about-tag">About APARTE</p>
+      <h2>운동할 때는 더 멋진 내가<br>꾸밀 때는 더 예쁜 내가</h2>
+      <p>APARTE는 헬스와 뷰티의 경계에서 시작되었습니다.<br>완벽을 위한 경계선. APARTE와 함께 시작하세요.</p>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-wrap">
+      <div class="footer-brand"><h3>APARTE</h3><p>Focus Separately</p></div>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="collection.html">Collection</a>
+        <a href="supplement.html">Supplement</a>
+        <a href="cart.html">Cart</a>
+        <a href="checkout.html">Checkout</a>
+        <a href="admin.html">Admin</a>
+      </div>
+    </div>
+    <p class="footer-copy">© 2025 APARTE. All rights reserved.</p>
+  </div>
+</footer>
+
+<div class="modal" id="modalLogin"><div class="modal-inner"><button class="modal-close" onclick="closeModal('login')">✕</button><h3>Login</h3><p class="modal-coming">🚀 곧 서비스 예정입니다!</p><p class="modal-sub">Firebase 회원 시스템 준비 중...</p></div></div>
+<div class="modal" id="modalSignup"><div class="modal-inner"><button class="modal-close" onclick="closeModal('signup')">✕</button><h3>Sign Up</h3><p class="modal-coming">🚀 곧 서비스 예정입니다!</p><p class="modal-sub">Firebase 회원 시스템 준비 중...</p></div></div>
+<div class="modal" id="modalAlert"><div class="modal-inner"><button class="modal-close" onclick="closeModal('alert')">✕</button><h3>🔔 가격 알림</h3><p class="modal-coming">준비 중입니다!</p><p class="modal-sub">이메일을 남겨주시면 오픈 시 알려드리겠습니다.</p><input type="email" placeholder="이메일 입력" class="modal-input"><button class="btn-modal-submit">알림 받기</button></div></div>
+
+<script src="script.js"></script>
 </body>
 </html>

@@ -1,227 +1,77 @@
 // Cart functionality
-let cart = [];
-let cartCount = 0;
+let cart = JSON.parse(localStorage.getItem('aparteCart')) || [];
 
-// Product data
-const products = {
-    liftbalm: {
-        name: 'LIFTBALM',
-        price: 9900,
-        originalPrice: 13000,
-        image: 'liftbalm.png'
-    },
-    bardymist: {
-        name: 'BARDYMIST',
-        price: 24900,
-        originalPrice: 28000,
-        image: 'bardymist.png'
-    },
-    frabell: {
-        name: 'FRABELL',
-        price: 33500,
-        bundle: 66000,
-        image: 'frabell.png'
-    }
-};
+function updateCartBadge() {
+  const badge = document.getElementById('cartBadge');
+  if (badge) badge.textContent = cart.length;
+}
+
+function addToCart(itemId) {
+  cart.push({ id: itemId, qty: 1, time: Date.now() });
+  localStorage.setItem('aparteCart', JSON.stringify(cart));
+  updateCartBadge();
+  alert('장바구니에 추가되었습니다!');
+}
+
+// Today's Offer Timer
+function startOfferTimer() {
+  const products = [
+    { name: '레깅스', orig: 38000, sale: 35000 },
+    { name: 'LIFTBALM', orig: 13000, sale: 9900 },
+    { name: 'BARDYMIST', orig: 28000, sale: 24900 },
+    { name: 'FRABELL', orig: 33500, sale: 33500 },
+    { name: '티셔츠', orig: 30000, sale: 27000 },
+    { name: '후디', orig: 63000, sale: 59000 },
+    { name: 'CREATINE', orig: 39900, sale: 39900 }
+  ];
+  
+  const dayOfYear = Math.floor((Date.now() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
+  const todayProduct = products[dayOfYear % products.length];
+  
+  const nameEl = document.getElementById('offerName');
+  const origEl = document.getElementById('offerOrig');
+  const priceEl = document.getElementById('offerPrice');
+  
+  if (nameEl) nameEl.textContent = todayProduct.name;
+  if (origEl) origEl.textContent = '₩' + todayProduct.orig.toLocaleString();
+  if (priceEl) priceEl.textContent = '₩' + todayProduct.sale.toLocaleString();
+  
+  function updateTimer() {
+    const now = new Date();
+    const midnight = new Date(now);
+    midnight.setHours(24, 0, 0, 0);
+    const diff = midnight - now;
+    
+    const h = Math.floor(diff / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+    
+    const hEl = document.getElementById('tH');
+    const mEl = document.getElementById('tM');
+    const sEl = document.getElementById('tS');
+    
+    if (hEl) hEl.textContent = String(h).padStart(2, '0');
+    if (mEl) mEl.textContent = String(m).padStart(2, '0');
+    if (sEl) sEl.textContent = String(s).padStart(2, '0');
+  }
+  
+  updateTimer();
+  setInterval(updateTimer, 1000);
+}
+
+// Modal functions
+function openModal(type) {
+  const modal = document.getElementById('modal' + type.charAt(0).toUpperCase() + type.slice(1));
+  if (modal) modal.classList.add('active');
+}
+
+function closeModal(type) {
+  const modal = document.getElementById('modal' + type.charAt(0).toUpperCase() + type.slice(1));
+  if (modal) modal.classList.remove('active');
+}
 
 // Initialize
-document.addEventListener('DOMContentLoaded', function() {
-    initializeProductImages();
-    setupCartButtons();
-    setupSmoothScroll();
-    setupScrollAnimations();
+document.addEventListener('DOMContentLoaded', () => {
+  updateCartBadge();
+  if (document.querySelector('.today-offer')) startOfferTimer();
 });
-
-// Load product images
-function initializeProductImages() {
-    // LIFTBALM image
-    const liftbalmImg = document.getElementById('liftbalm-img');
-    if (liftbalmImg) {
-        liftbalmImg.src = 'liftbalm.png';
-        liftbalmImg.onerror = function() {
-            this.parentElement.innerHTML = '<div class="placeholder-img"><span>💪💄</span></div>';
-        };
-    }
-    
-    // BARDYMIST image
-    const bardymistImg = document.getElementById('bardymist-img');
-    if (bardymistImg) {
-        bardymistImg.src = 'bardymist.png';
-        bardymistImg.onerror = function() {
-            this.parentElement.innerHTML = '<div class="placeholder-img"><span>🏋️💦</span></div>';
-        };
-    }
-}
-
-// Setup cart buttons
-function setupCartButtons() {
-    const addButtons = document.querySelectorAll('.btn-add-cart');
-    
-    addButtons.forEach(button => {
-        button.addEventListener('click', function(e) {
-            e.preventDefault();
-            const productCard = this.closest('.product-card');
-            const productId = productCard.dataset.product;
-            
-            addToCart(productId);
-            animateAddToCart(this);
-        });
-    });
-}
-
-// Add to cart
-function addToCart(productId) {
-    cartCount++;
-    updateCartCount();
-    
-    // Show notification
-    showNotification(`${productId.toUpperCase()} added to cart!`);
-}
-
-// Update cart count
-function updateCartCount() {
-    const cartCountElement = document.querySelector('.cart-count');
-    if (cartCountElement) {
-        cartCountElement.textContent = cartCount;
-        cartCountElement.style.animation = 'none';
-        setTimeout(() => {
-            cartCountElement.style.animation = 'pulse 0.3s ease-in-out';
-        }, 10);
-    }
-}
-
-// Animate add to cart button
-function animateAddToCart(button) {
-    const originalText = button.textContent;
-    button.textContent = 'Added! ✓';
-    button.style.background = '#00d084';
-    
-    setTimeout(() => {
-        button.textContent = originalText;
-        button.style.background = '';
-    }, 1500);
-}
-
-// Show notification
-function showNotification(message) {
-    // Remove existing notification
-    const existing = document.querySelector('.notification');
-    if (existing) {
-        existing.remove();
-    }
-    
-    // Create notification
-    const notification = document.createElement('div');
-    notification.className = 'notification';
-    notification.textContent = message;
-    notification.style.cssText = `
-        position: fixed;
-        top: 100px;
-        right: 20px;
-        background: #ff006e;
-        color: white;
-        padding: 1rem 2rem;
-        border-radius: 5px;
-        font-weight: 700;
-        z-index: 10000;
-        animation: slideInRight 0.3s ease-out;
-        box-shadow: 0 10px 30px rgba(255, 0, 110, 0.3);
-    `;
-    
-    document.body.appendChild(notification);
-    
-    setTimeout(() => {
-        notification.style.animation = 'slideOutRight 0.3s ease-out';
-        setTimeout(() => {
-            notification.remove();
-        }, 300);
-    }, 2000);
-}
-
-// Smooth scroll
-function setupSmoothScroll() {
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
-        });
-    });
-}
-
-// Scroll animations
-function setupScrollAnimations() {
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -100px 0px'
-    };
-    
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
-            }
-        });
-    }, observerOptions);
-    
-    // Observe product cards
-    document.querySelectorAll('.product-card').forEach((card, index) => {
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(30px)';
-        card.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
-        card.style.transitionDelay = `${index * 0.1}s`;
-        observer.observe(card);
-    });
-    
-    // Observe promo cards
-    document.querySelectorAll('.promo-card').forEach((card, index) => {
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(30px)';
-        card.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
-        card.style.transitionDelay = `${index * 0.1}s`;
-        observer.observe(card);
-    });
-}
-
-// Add CSS animations
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes pulse {
-        0%, 100% { transform: scale(1); }
-        50% { transform: scale(1.2); }
-    }
-    
-    @keyframes slideInRight {
-        from {
-            transform: translateX(100%);
-            opacity: 0;
-        }
-        to {
-            transform: translateX(0);
-            opacity: 1;
-        }
-    }
-    
-    @keyframes slideOutRight {
-        from {
-            transform: translateX(0);
-            opacity: 1;
-        }
-        to {
-            transform: translateX(100%);
-            opacity: 0;
-        }
-    }
-`;
-document.head.appendChild(style);
-
-// Console easter egg
-console.log('%c APARTE ', 'background: #ff006e; color: white; font-size: 30px; font-weight: bold; padding: 10px;');
-console.log('%c Focus Separately, Be Real You ', 'background: #0a0a0a; color: white; font-size: 14px; padding: 5px;');
-console.log('포트폴리오 프로젝트 | Portfolio Project');
