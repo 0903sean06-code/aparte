@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cart - APARTE</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Archivo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+.cart-page{padding:120px 0 80px;min-height:80vh}.cart-empty{text-align:center;padding:60px 0}.cart-empty h2{font-size:36px;margin-bottom:20px}.cart-list{max-width:900px;margin:0 auto}.cart-item{display:flex;gap:30px;background:var(--white);border:1px solid #e0e0e0;padding:30px;margin-bottom:20px;align-items:center}.cart-item-img{width:120px;height:120px;background:var(--gray-light);border-radius:8px}.cart-item-info{flex:1}.cart-item-info h3{font-size:24px;margin-bottom:10px}.cart-item-price{font-size:20px;font-weight:700;color:var(--pink);margin-top:10px}.cart-item-qty{display:flex;gap:15px;align-items:center;margin-top:15px}.qty-btn{padding:8px 15px;background:var(--black);color:var(--white);font-weight:600}.qty-num{font-size:18px;font-weight:600}.btn-remove{padding:10px 20px;background:var(--gray);color:var(--white);font-size:14px}.cart-summary{max-width:900px;margin:40px auto 0;padding:30px;background:var(--gray-light);border-radius:8px}.cart-total{display:flex;justify-content:space-between;font-size:28px;font-weight:700;margin-bottom:30px}.cart-total span:last-child{color:var(--pink)}.btn-checkout{width:100%;padding:18px;background:var(--pink);color:var(--white);font-weight:700;font-size:18px;transition:all .3s}.btn-checkout:hover{background:var(--black)}
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-inner">
+    <div class="nav-actions left">
+      <button class="btn-nav" onclick="openModal('login')">Login</button>
+      <button class="btn-nav" onclick="openModal('signup')">Sign Up</button>
+    </div>
+    <a href="index.html" class="nav-logo">APARTE</a>
+    <div class="nav-actions right">
+      <a href="cart.html" class="btn-nav btn-cart">Cart <span id="cartBadge">0</span></a>
+    </div>
+  </div>
+</nav>
+
+<section class="cart-page">
+  <div class="container">
+    <h1 class="section-title">Shopping Cart</h1>
+    <div id="cartContent"></div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-wrap">
+      <div class="footer-brand"><h3>APARTE</h3><p>Focus Separately</p></div>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="collection.html">Collection</a>
+        <a href="supplement.html">Supplement</a>
+        <a href="cart.html">Cart</a>
+      </div>
+    </div>
+    <p class="footer-copy">© 2025 APARTE. All rights reserved.</p>
+  </div>
+</footer>
+
+<div class="modal" id="modalLogin"><div class="modal-inner"><button class="modal-close" onclick="closeModal('login')">✕</button><h3>Login</h3><p class="modal-coming">🚀 곧 서비스 예정입니다!</p></div></div>
+<div class="modal" id="modalSignup"><div class="modal-inner"><button class="modal-close" onclick="closeModal('signup')">✕</button><h3>Sign Up</h3><p class="modal-coming">🚀 곧 서비스 예정입니다!</p></div></div>
+
+<script src="script.js"></script>
+<script>
+const productData={liftbalm:{name:'LIFTBALM',price:9900},bardymist:{name:'BARDYMIST',price:24900},frabell:{name:'FRABELL',price:33500},creatine:{name:'CREATINE THE RED',price:39900}};
+
+function renderCart(){
+  const cart=JSON.parse(localStorage.getItem('aparteCart'))||[];
+  const content=document.getElementById('cartContent');
+  if(cart.length===0){
+    content.innerHTML='<div class="cart-empty"><h2>장바구니가 비어있습니다</h2><a href="index.html" class="btn-hero">쇼핑 계속하기</a></div>';
+    return;
+  }
+  let html='<div class="cart-list">';
+  let total=0;
+  cart.forEach((item,idx)=>{
+    const prod=productData[item.id]||{name:item.id,price:0};
+    total+=prod.price;
+    html+=`<div class="cart-item">
+      <div class="cart-item-img"></div>
+      <div class="cart-item-info">
+        <h3>${prod.name}</h3>
+        <p class="cart-item-price">₩${prod.price.toLocaleString()}</p>
+        <div class="cart-item-qty">
+          <button class="qty-btn">-</button>
+          <span class="qty-num">1</span>
+          <button class="qty-btn">+</button>
+        </div>
+      </div>
+      <button class="btn-remove" onclick="removeItem(${idx})">삭제</button>
+    </div>`;
+  });
+  html+=`</div>
+    <div class="cart-summary">
+      <div class="cart-total"><span>총 금액</span><span>₩${total.toLocaleString()}</span></div>
+      <button class="btn-checkout" onclick="location='checkout.html'">결제하기</button>
+    </div>`;
+  content.innerHTML=html;
+}
+
+function removeItem(idx){
+  let cart=JSON.parse(localStorage.getItem('aparteCart'))||[];
+  cart.splice(idx,1);
+  localStorage.setItem('aparteCart',JSON.stringify(cart));
+  updateCartBadge();
+  renderCart();
+}
+
+renderCart();
+</script>
+</body>
+</html>

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Checkout - APARTE</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Archivo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+.checkout-page{padding:120px 0 80px}.checkout-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:60px;max-width:1200px;margin:0 auto}.checkout-section{background:var(--white);padding:40px;border:1px solid #e0e0e0;border-radius:8px}.checkout-section h2{font-size:32px;margin-bottom:30px}.form-group{margin-bottom:25px}.form-group label{display:block;margin-bottom:8px;font-weight:600;font-size:14px}.form-input{width:100%;padding:12px;border:1px solid #ddd;border-radius:4px;font-size:16px}.form-row{display:grid;grid-template-columns:1fr 1fr;gap:20px}.order-summary{background:var(--gray-light);padding:30px;border-radius:8px}.summary-item{display:flex;justify-content:space-between;padding:15px 0;border-bottom:1px solid #ddd}.summary-total{display:flex;justify-content:space-between;font-size:24px;font-weight:700;margin-top:20px;padding-top:20px}.summary-total span:last-child{color:var(--pink)}.btn-pay{width:100%;padding:18px;background:var(--pink);color:var(--white);font-weight:700;font-size:18px;margin-top:30px;transition:all .3s}.btn-pay:hover{background:var(--black)}.stripe-note{text-align:center;margin-top:20px;font-size:14px;opacity:.7}
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-inner">
+    <div class="nav-actions left">
+      <button class="btn-nav" onclick="openModal('login')">Login</button>
+      <button class="btn-nav" onclick="openModal('signup')">Sign Up</button>
+    </div>
+    <a href="index.html" class="nav-logo">APARTE</a>
+    <div class="nav-actions right">
+      <a href="cart.html" class="btn-nav btn-cart">Cart <span id="cartBadge">0</span></a>
+    </div>
+  </div>
+</nav>
+
+<section class="checkout-page">
+  <div class="container">
+    <h1 class="section-title">Checkout</h1>
+    <div class="checkout-grid">
+      <div class="checkout-section">
+        <h2>배송 정보</h2>
+        <form id="checkoutForm">
+          <div class="form-group">
+            <label>이름 *</label>
+            <input type="text" class="form-input" required>
+          </div>
+          <div class="form-group">
+            <label>이메일 *</label>
+            <input type="email" class="form-input" required>
+          </div>
+          <div class="form-group">
+            <label>전화번호 *</label>
+            <input type="tel" class="form-input" required>
+          </div>
+          <div class="form-group">
+            <label>주소 *</label>
+            <input type="text" class="form-input" placeholder="도로명 주소" required>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>상세주소</label>
+              <input type="text" class="form-input">
+            </div>
+            <div class="form-group">
+              <label>우편번호</label>
+              <input type="text" class="form-input">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>배송 메모</label>
+            <input type="text" class="form-input" placeholder="배송 시 요청사항">
+          </div>
+        </form>
+      </div>
+      
+      <div>
+        <div class="checkout-section">
+          <h2>주문 요약</h2>
+          <div class="order-summary">
+            <div id="orderItems"></div>
+            <div class="summary-total">
+              <span>총 결제금액</span>
+              <span id="totalPrice">₩0</span>
+            </div>
+          </div>
+          <button class="btn-pay" onclick="processPayment()">결제하기</button>
+          <p class="stripe-note">💳 Stripe 결제 시스템 (데모)</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-wrap">
+      <div class="footer-brand"><h3>APARTE</h3><p>Focus Separately</p></div>
+      <div class="footer-links"><a href="index.html">Home</a><a href="cart.html">Cart</a></div>
+    </div>
+    <p class="footer-copy">© 2025 APARTE. All rights reserved.</p>
+  </div>
+</footer>
+
+<div class="modal" id="modalLogin"><div class="modal-inner"><button class="modal-close" onclick="closeModal('login')">✕</button><h3>Login</h3><p class="modal-coming">🚀 곧 서비스 예정입니다!</p></div></div>
+<div class="modal" id="modalSignup"><div class="modal-inner"><button class="modal-close" onclick="closeModal('signup')">✕</button><h3>Sign Up</h3><p class="modal-coming">🚀 곧 서비스 예정입니다!</p></div></div>
+
+<script src="script.js"></script>
+<script>
+const productData={liftbalm:{name:'LIFTBALM',price:9900},bardymist:{name:'BARDYMIST',price:24900},frabell:{name:'FRABELL',price:33500},creatine:{name:'CREATINE THE RED',price:39900}};
+
+function renderOrderSummary(){
+  const cart=JSON.parse(localStorage.getItem('aparteCart'))||[];
+  if(cart.length===0){location='cart.html';return;}
+  let html='';
+  let total=0;
+  cart.forEach(item=>{
+    const prod=productData[item.id]||{name:item.id,price:0};
+    total+=prod.price;
+    html+=`<div class="summary-item"><span>${prod.name}</span><span>₩${prod.price.toLocaleString()}</span></div>`;
+  });
+  document.getElementById('orderItems').innerHTML=html;
+  document.getElementById('totalPrice').textContent='₩'+total.toLocaleString();
+}
+
+function processPayment(){
+  alert('💳 Stripe 결제 데모\n\n실제 결제 연동은 백엔드 서버가 필요합니다.\n\n가이드 문서를 참고하세요!');
+  localStorage.removeItem('aparteCart');
+  location='index.html';
+}
+
+renderOrderSummary();
+</script>
+</body>
+</html>

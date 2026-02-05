@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Admin Dashboard - APARTE</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Archivo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+.admin-page{padding:80px 0;min-height:100vh;background:var(--gray-light)}.admin-header{text-align:center;margin-bottom:60px}.admin-header h1{font-size:48px;margin-bottom:10px}.admin-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:30px;margin-bottom:60px}.stat-card{background:var(--white);padding:30px;border-radius:8px;text-align:center;transition:all .3s}.stat-card:hover{transform:translateY(-5px);box-shadow:0 8px 25px rgba(0,0,0,.1)}.stat-icon{font-size:40px;margin-bottom:15px}.stat-value{font-size:36px;font-weight:700;color:var(--pink);margin-bottom:10px}.stat-label{font-size:16px;opacity:.7}.admin-section{background:var(--white);padding:40px;border-radius:8px;margin-bottom:30px}.admin-section h2{font-size:32px;margin-bottom:30px}.order-table{width:100%;border-collapse:collapse}.order-table th{text-align:left;padding:15px;border-bottom:2px solid #ddd;font-weight:700}.order-table td{padding:15px;border-bottom:1px solid #e0e0e0}.order-status{padding:6px 12px;border-radius:20px;font-size:12px;font-weight:600;background:var(--pink-light);color:var(--pink)}.product-actions{display:flex;gap:10px}.btn-admin{padding:8px 16px;background:var(--black);color:var(--white);font-size:14px;transition:all .3s}.btn-admin:hover{background:var(--pink)}
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">APARTE</a>
+    <div class="nav-actions right">
+      <a href="index.html" class="btn-nav">← Back to Site</a>
+    </div>
+  </div>
+</nav>
+
+<section class="admin-page">
+  <div class="container">
+    <div class="admin-header">
+      <h1>Admin Dashboard</h1>
+      <p>APARTE 관리자 대시보드</p>
+    </div>
+
+    <div class="admin-grid">
+      <div class="stat-card">
+        <div class="stat-icon">📦</div>
+        <div class="stat-value">127</div>
+        <div class="stat-label">총 주문</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">💰</div>
+        <div class="stat-value">₩3.2M</div>
+        <div class="stat-label">총 매출</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">👥</div>
+        <div class="stat-value">1,043</div>
+        <div class="stat-label">총 회원</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">📈</div>
+        <div class="stat-value">+24%</div>
+        <div class="stat-label">이번 달 성장률</div>
+      </div>
+    </div>
+
+    <div class="admin-section">
+      <h2>최근 주문</h2>
+      <table class="order-table">
+        <thead>
+          <tr>
+            <th>주문번호</th>
+            <th>고객</th>
+            <th>제품</th>
+            <th>금액</th>
+            <th>상태</th>
+            <th>날짜</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>#ORD-2025-001</td>
+            <td>홍길동</td>
+            <td>LIFTBALM</td>
+            <td>₩9,900</td>
+            <td><span class="order-status">배송완료</span></td>
+            <td>2025-02-05</td>
+          </tr>
+          <tr>
+            <td>#ORD-2025-002</td>
+            <td>김영희</td>
+            <td>레깅스, 티셔츠</td>
+            <td>₩62,000</td>
+            <td><span class="order-status">배송중</span></td>
+            <td>2025-02-06</td>
+          </tr>
+          <tr>
+            <td>#ORD-2025-003</td>
+            <td>이철수</td>
+            <td>CREATINE THE RED</td>
+            <td>₩39,900</td>
+            <td><span class="order-status">주문완료</span></td>
+            <td>2025-02-06</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="admin-section">
+      <h2>제품 관리</h2>
+      <div class="product-actions">
+        <button class="btn-admin">+ 새 제품 추가</button>
+        <button class="btn-admin">재고 관리</button>
+        <button class="btn-admin">가격 수정</button>
+      </div>
+      <p style="margin-top:20px;opacity:.7">제품 관리 기능은 백엔드 연동 후 사용 가능합니다.</p>
+    </div>
+
+    <div class="admin-section">
+      <h2>설정</h2>
+      <p>🚀 관리자 기능은 Firebase/백엔드 연동 후 활성화됩니다.</p>
+      <p style="margin-top:15px;opacity:.7">현재는 UI 데모 버전입니다.</p>
+    </div>
+
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <p class="footer-copy">© 2025 APARTE. All rights reserved.</p>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

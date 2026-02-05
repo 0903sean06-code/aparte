@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Healthwear Collection - APARTE</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Archivo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-inner">
+    <div class="nav-actions left">
+      <button class="btn-nav" onclick="openModal('login')">Login</button>
+      <button class="btn-nav" onclick="openModal('signup')">Sign Up</button>
+    </div>
+    <a href="index.html" class="nav-logo">APARTE</a>
+    <div class="nav-actions right">
+      <a href="cart.html" class="btn-nav btn-cart">Cart <span id="cartBadge">0</span></a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero" style="height:60vh">
+  <div class="hero-bg" style="background:linear-gradient(135deg,#1a1a1a,#2a2a2a)"></div>
+  <div class="hero-content">
+    <h1 class="hero-title" style="color:#fff">HEALTHWEAR<br><span>COLLECTION</span></h1>
+    <p class="hero-sub" style="color:#fff;opacity:.9">드라이핏 소재 · 신축성 · 열 방출</p>
+  </div>
+</section>
+
+<section class="products" style="padding:80px 0">
+  <div class="container">
+    <div class="product-grid">
+      <div class="product-card">
+        <div class="product-img-wrap">
+          <div class="product-ph" style="background:linear-gradient(135deg,#1a1a1a,#2a2a2a)"></div>
+        </div>
+        <div class="product-info">
+          <h3>레깅스</h3>
+          <p class="product-desc">신축성 · 열방출 · 오른쪽 다리 APARTE 로고</p>
+          <p class="product-orig">₩38,000</p>
+          <p class="product-price">₩35,000</p>
+          <p style="font-size:13px;opacity:.7;margin:10px 0">추가 구매 시 ₩3,000 할인/장</p>
+          <button class="btn-cart-add" onclick="addToCart('leggings')">+ Cart</button>
+        </div>
+      </div>
+      
+      <div class="product-card">
+        <div class="product-img-wrap">
+          <div class="product-ph" style="background:linear-gradient(135deg,#1a1a1a,#2a2a2a)"></div>
+        </div>
+        <div class="product-info">
+          <h3>티셔츠</h3>
+          <p class="product-desc">목 APARTE 밴드 · 등판 BE REAL YOU</p>
+          <p class="product-orig">₩30,000</p>
+          <p class="product-price">₩27,000</p>
+          <p style="font-size:13px;opacity:.7;margin:10px 0">추가 구매 시 ₩1,000 할인/장</p>
+          <button class="btn-cart-add" onclick="addToCart('tshirt')">+ Cart</button>
+        </div>
+      </div>
+      
+      <div class="product-card">
+        <div class="product-img-wrap">
+          <div class="product-ph" style="background:linear-gradient(135deg,#1a1a1a,#2a2a2a)"></div>
+        </div>
+        <div class="product-info">
+          <h3>후디</h3>
+          <p class="product-desc">등판 반원형 APARTE + 로고</p>
+          <p class="product-orig">₩63,000</p>
+          <p class="product-price">₩59,000</p>
+          <p style="font-size:13px;opacity:.7;margin:10px 0">추가 구매 시 ₩3,000 할인/장</p>
+          <button class="btn-cart-add" onclick="addToCart('hoodie')">+ Cart</button>
+        </div>
+      </div>
+      
+      <div class="product-card">
+        <div class="product-img-wrap">
+          <div class="product-ph" style="background:linear-gradient(135deg,#1a1a1a,#2a2a2a)"></div>
+        </div>
+        <div class="product-info">
+          <h3>스포츠 브라</h3>
+          <p class="product-desc">밴드 APARTE 반복 · 레이서백</p>
+          <p class="product-orig">₩29,000</p>
+          <p class="product-price">₩27,000</p>
+          <p style="font-size:13px;opacity:.7;margin:10px 0">추가 구매 시 ₩1,000 할인/장</p>
+          <button class="btn-cart-add" onclick="addToCart('bra')">+ Cart</button>
+        </div>
+      </div>
+      
+      <div class="product-card">
+        <div class="product-img-wrap">
+          <div class="product-ph" style="background:linear-gradient(135deg,#1a1a1a,#2a2a2a)"></div>
+        </div>
+        <div class="product-info">
+          <h3>탑</h3>
+          <p class="product-desc">밴드 APARTE 각인</p>
+          <p class="product-orig">₩30,000</p>
+          <p class="product-price">₩27,000</p>
+          <p style="font-size:13px;opacity:.7;margin:10px 0">추가 구매 시 ₩1,000 할인/장</p>
+          <button class="btn-cart-add" onclick="addToCart('top')">+ Cart</button>
+        </div>
+      </div>
+      
+      <div class="product-card">
+        <div class="product-img-wrap">
+          <div class="product-ph" style="background:linear-gradient(135deg,#1a1a1a,#2a2a2a)"></div>
+        </div>
+        <div class="product-info">
+          <h3>팬티 (3개입)</h3>
+          <p class="product-desc">APARTE 반복 각인</p>
+          <p class="product-orig">₩54,000</p>
+          <p class="product-price">₩49,900</p>
+          <p style="font-size:13px;opacity:.7;margin:10px 0">추가 구매 시 1장 추가/세트</p>
+          <button class="btn-cart-add" onclick="addToCart('underwear')">+ Cart</button>
+        </div>
+      </div>
+      
+      <div class="product-card">
+        <div class="product-img-wrap">
+          <div class="product-ph" style="background:linear-gradient(135deg,#1a1a1a,#2a2a2a)"></div>
+        </div>
+        <div class="product-info">
+          <h3>바지</h3>
+          <p class="product-desc">드라이핏 소재 · 신축성</p>
+          <p class="product-orig">₩35,000</p>
+          <p class="product-price">₩29,900</p>
+          <p style="font-size:13px;opacity:.7;margin:10px 0">추가 구매 시 ₩2,000 할인/장</p>
+          <button class="btn-cart-add" onclick="addToCart('pants')">+ Cart</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-wrap">
+      <div class="footer-brand"><h3>APARTE</h3><p>Focus Separately</p></div>
+      <div class="footer-links"><a href="index.html">Home</a><a href="cart.html">Cart</a></div>
+    </div>
+    <p class="footer-copy">© 2025 APARTE. All rights reserved.</p>
+  </div>
+</footer>
+
+<div class="modal" id="modalLogin"><div class="modal-inner"><button class="modal-close" onclick="closeModal('login')">✕</button><h3>Login</h3><p class="modal-coming">🚀 곧 서비스 예정입니다!</p></div></div>
+<div class="modal" id="modalSignup"><div class="modal-inner"><button class="modal-close" onclick="closeModal('signup')">✕</button><h3>Sign Up</h3><p class="modal-coming">🚀 곧 서비스 예정입니다!</p></div></div>
+
+<script src="script.js"></script>
+</body>
+</html>
